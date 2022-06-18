@@ -1,11 +1,8 @@
 ﻿using DockerApp.DB;
-using DockerApp.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DockerApp.Controllers
 {
@@ -23,10 +20,21 @@ namespace DockerApp.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IActionResult), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(BadRequestResult))]
         public IActionResult Get()
         {
-            var forecasts = _context.WeatherForecast.ToList();
-            return Ok(forecasts);
+            IActionResult result = null;
+            try
+            {
+                var forecasts = _context.WeatherForecast.ToList();
+                result = Ok(forecasts);
+            }
+            catch
+            {
+                result = BadRequest();
+            }
+            return result;
         }
     }
 }

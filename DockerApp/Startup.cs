@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace DockerApp
 {
@@ -30,6 +31,10 @@ namespace DockerApp
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DockerApp", Version = "v1" });
+                c.AddServer(new OpenApiServer() { Url = "http://localhost:5050", Description = "Default" });
+                c.AddServer(new OpenApiServer() { 
+                    Url = Environment.GetEnvironmentVariable("EXTERNAL_API_URL") ?? "https://localhost:8089",
+                    Description = "External"});
             });
         }
 
@@ -45,6 +50,11 @@ namespace DockerApp
 
             app.UseHttpsRedirection();
 
+            app.UseCors(options => 
+                options.AllowAnyMethod().
+                        AllowAnyHeader().
+                        SetIsOriginAllowed(origin => true).
+                        AllowCredentials());
             app.UseRouting();
 
             app.UseAuthorization();
