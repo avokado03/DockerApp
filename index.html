@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <style>
+        td{
+            text-align:center;
+        }
+    </style>
+    <div id="app">
+        <table>
+            <tr>
+                <th>forecastId</th>
+                <th>forecastDate</th>
+                <th>forecastTemperature</th>
+                <th>forecastSummary</th>
+            </tr>
+            <tr v-for="item in items">
+                <td>{{item.forecastId}}</td>
+                <td>{{item.forecastDate}}</td>
+                <td>{{item.forecastTemperature}}</td>
+                <td>{{item.forecastSummary}}</td>
+            </tr>
+        </table>
+    </div>
+<script>
+    Vue.createApp({
+        data:()=>({
+            host: "https://localhost:8089",
+            items: []
+        }),
+        methods:{
+            loadItems(){
+                fetch(this.host + "/WeatherForecast")
+                    .then(response=>response.json())
+                    .then(items => {
+                        this.items = items;
+                    });
+            }
+        },
+        created(){
+            this.loadItems();
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>
