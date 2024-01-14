@@ -31,7 +31,7 @@ namespace DockerApp
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DockerApp", Version = "v1" });
-                c.AddServer(new OpenApiServer() { Url = "http://localhost:5050", Description = "Default" });
+                c.AddServer(new OpenApiServer() { Url = "http://localhost:5000", Description = "Default" });
                 //c.AddServer(new OpenApiServer() { 
                 //    Url = Environment.GetEnvironmentVariable("EXTERNAL_API_URL") ?? "https://localhost:8089",
                 //    Description = "External"});

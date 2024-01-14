@@ -20,7 +20,7 @@ namespace DockerApp
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("http://*:5050;https://*:5051");
+                    webBuilder.UseUrls("http://*:5050");
                     webBuilder.UseStartup<Startup>();
                 });
     }
