@@ -4,12 +4,9 @@ services:
   dockerapp:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80;http://+:5000
+      - ASPNETCORE_URLS=http://+:5000
     ports:
       - 8088:80
       - 8089:443
       - 5001:5001
       - 5000:5000
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ~/.aspnet/https:/https/:ro
